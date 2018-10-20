@@ -1,0 +1,100 @@
+<div class="page-header">
+    <h1 style="width: 18%;">Project Stats</h1> 
+</div>
+<div class="col-xs-12 nomarginpadding" ng-cloak>
+<div class="col-lg-6 chart-style" >
+	<label><h3>Internal Status</h3></label>
+	<button ng-click="dashBoard.getTicketSummaryByInternalStatusForChart('pie');" class="chart-btn">P</button>
+	<button ng-click="dashBoard.getTicketSummaryByInternalStatusForChart('bar');" class="chart-btn">B</button>
+	<button ng-click="dashBoard.getTicketSummaryByInternalStatusForChart('line');" class="chart-btn">L</button>
+	<button ng-click="dashBoard.getTicketSummaryByInternalStatusForChart('radar');" class="chart-btn">R</button>
+	<canvas id="internalStatus" ></canvas>
+</div>
+<div class="col-lg-6 chart-style" >
+	<label><h3>Mantis Status</h3></label>
+	<button ng-click="dashBoard.getTicketSummaryByMantisStatusForChart('doughnut');" class="chart-btn">P</button>
+	<button ng-click="dashBoard.getTicketSummaryByMantisStatusForChart('bar');" class="chart-btn">B</button>
+	<button ng-click="dashBoard.getTicketSummaryByMantisStatusForChart('line');" class="chart-btn">L</button>
+	<button ng-click="dashBoard.getTicketSummaryByMantisStatusForChart('radar');" class="chart-btn">R</button>
+	<canvas id="mantisStatus" ></canvas>
+</div>
+<div class="col-lg-6 chart-style" >
+	<label><h3>Assignee Wise</h3><h6>(Overall)</h6></label>
+	<button ng-click="dashBoard.getTicketSummaryByAssigneeForChart('pie');" class="chart-btn">P</button>
+	<button ng-click="dashBoard.getTicketSummaryByAssigneeForChart('horizontalBar');" class="chart-btn">B</button>
+	<button ng-click="dashBoard.getTicketSummaryByAssigneeForChart('line');" class="chart-btn">L</button>
+	<button ng-click="dashBoard.getTicketSummaryByAssigneeForChart('radar');" class="chart-btn">R</button>
+	<canvas id="assignee" ></canvas>
+</div>
+<div class="col-lg-6 chart-style" >
+	<label><h3>Assignee Wise</h3><h6>(Excluding Closed Tickets)</h6></label>
+	<button ng-click="dashBoard.getTicketSummaryByAssigneeForChartOnlyOpen('pie');" class="chart-btn">P</button>
+	<button ng-click="dashBoard.getTicketSummaryByAssigneeForChartOnlyOpen('horizontalBar');" class="chart-btn">B</button>
+	<button ng-click="dashBoard.getTicketSummaryByAssigneeForChartOnlyOpen('line');" class="chart-btn">L</button>
+	<button ng-click="dashBoard.getTicketSummaryByAssigneeForChartOnlyOpen('radar');" class="chart-btn">R</button>
+	<canvas id="assigneeOnlyOpen" ></canvas>
+</div>
+<div class="col-lg-6 chart-style" >
+	<label><h3>Module Wise</h3><h6>(Overall)</h6></label>
+	<button ng-click="dashBoard.getTicketSummaryByModuleForChart('pie');" class="chart-btn">P</button>
+	<button ng-click="dashBoard.getTicketSummaryByModuleForChart('horizontalBar');" class="chart-btn">B</button>
+	<button ng-click="dashBoard.getTicketSummaryByModuleForChart('line');" class="chart-btn">L</button>
+	<button ng-click="dashBoard.getTicketSummaryByModuleForChart('radar');" class="chart-btn">R</button>
+	<canvas id="module" ></canvas>
+</div>
+<div class="col-lg-6 chart-style" >
+	<label><h3>Module Wise</h3><h6>(Excluding Closed Tickets)</h6></label>
+	<button ng-click="dashBoard.getTicketSummaryByModuleForChartOnlyOpen('pie');" class="chart-btn">P</button>
+	<button ng-click="dashBoard.getTicketSummaryByModuleForChartOnlyOpen('horizontalBar');" class="chart-btn">B</button>
+	<button ng-click="dashBoard.getTicketSummaryByModuleForChartOnlyOpen('line');" class="chart-btn">L</button>
+	<button ng-click="dashBoard.getTicketSummaryByModuleForChartOnlyOpen('radar');" class="chart-btn">R</button>
+	<canvas id="moduleOnlyOpen" ></canvas>
+</div>
+<div class="col-lg-6 chart-style" >
+	<label><h3>Internal Category</h3><h6>(Overall)</h6></label>
+	<button ng-click="dashBoard.getTicketSummaryByInternalCategoryForChart('pie');" class="chart-btn">P</button>
+	<button ng-click="dashBoard.getTicketSummaryByInternalCategoryForChart('horizontalBar');" class="chart-btn">B</button>
+	<button ng-click="dashBoard.getTicketSummaryByInternalCategoryForChart('line');" class="chart-btn">L</button>
+	<button ng-click="dashBoard.getTicketSummaryByInternalCategoryForChart('radar');" class="chart-btn">R</button>
+	<canvas id="internalCategory" ></canvas>
+</div>
+<div class="col-lg-6 chart-style" >
+	<label><h3>Internal Category</h3><h6>(Excluding Closed Tickets)</h6></label>
+	<button ng-click="dashBoard.getTicketSummaryByInternalCategoryForChartOnlyOpen('pie');" class="chart-btn">P</button>
+	<button ng-click="dashBoard.getTicketSummaryByInternalCategoryForChartOnlyOpen('horizontalBar');" class="chart-btn">B</button>
+	<button ng-click="dashBoard.getTicketSummaryByInternalCategoryForChartOnlyOpen('line');" class="chart-btn">L</button>
+	<button ng-click="dashBoard.getTicketSummaryByInternalCategoryForChartOnlyOpen('radar');" class="chart-btn">R</button>
+	<canvas id="internalCategoryOnlyOpen" ></canvas>
+</div>
+<div class="col-lg-6 chart-style" >
+	<label><h3>Mantis Category</h3><h6>(Overall)</h6></label>
+	<button ng-click="dashBoard.getTicketSummaryByMantisCategoryForChart('pie');" class="chart-btn">P</button>
+	<button ng-click="dashBoard.getTicketSummaryByMantisCategoryForChart('horizontalBar');" class="chart-btn">B</button>
+	<button ng-click="dashBoard.getTicketSummaryByMantisCategoryForChart('line');" class="chart-btn">L</button>
+	<button ng-click="dashBoard.getTicketSummaryByMantisCategoryForChart('radar');" class="chart-btn">R</button>
+	<canvas id="mantisCategory" ></canvas>
+</div>
+<div class="col-lg-6 chart-style" >
+	<label><h3>Mantis Category</h3><h6>(Excluding Closed Tickets)</h6></label>
+	<button ng-click="dashBoard.getTicketSummaryByMantisCategoryForChartOnlyOpen('pie');" class="chart-btn">P</button>
+	<button ng-click="dashBoard.getTicketSummaryByMantisCategoryForChartOnlyOpen('horizontalBar');" class="chart-btn">B</button>
+	<button ng-click="dashBoard.getTicketSummaryByMantisCategoryForChartOnlyOpen('line');" class="chart-btn">L</button>
+	<button ng-click="dashBoard.getTicketSummaryByMantisCategoryForChartOnlyOpen('radar');" class="chart-btn">R</button>
+	<canvas id="mantisCategoryOnlyOpen" ></canvas>
+</div>
+</div>
+<div class="modal fade" id="myModal1" role="dialog">
+	<div class="modal-dialog">
+	  <!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">Loading...</h4>
+			</div>
+			<div class="modal-body">
+				<div class="dizzy-gillespie"></div>
+			</div>
+			<div class="modal-footer">
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,66 @@
+<div class="page-header">
+    <h1 style="width: 26%;">User Management</h1> 
+</div>
+
+</br>
+<div class="jumbotron text-center" ng-show="management.loading">
+<span class="glyphicon glyphicon-repeat spinner"></span>
+<p>Loading...</p>
+</div>
+<!-- Custom Error Message -->
+<div class="row show-hide-message" ng-show="management.moreErr">
+        <div class="alert alert-danger">{{ management.moreErr }}</div>
+    </div>
+    <!-- Custom Error Message -->
+    
+<br>
+<button type="button" class="btn btn-success" ng-click="management.showMore(number);">Apply Filter</button>
+<button type="button" class="btn btn-warning" ng-click="management.showAll();">Show All</button>
+<!-- Input For Filter  -->
+<div class="showmore">
+    <div class="col-lg-6">
+        <div class="input-group">
+            <span class="input-group-addon">Results to display:</span>
+            <input type="text" class="form-control" ng-model="number">
+        </div>
+    </div>
+</div>
+<!-- Input For Filter  -->
+<br>
+<br>
+<br>
+
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <strong >User Management</strong>
+    </div>
+    <table class="table">
+        <tr>
+            <th>Name</th>
+            <th>Associate ID</th>
+            <th>E-Mail</th>
+        </tr>
+        <tr ng-repeat="user in management.users | limitTo : management.limit">
+            <td>{{user.userName}}</td>
+            <td>{{user.associateID}}</td>
+            <td>{{user.email}}</td>
+            <td>
+                <a href="/edit/{{user._id}}" ng-show="management.editAccess">
+                    <button type="button" class="btn btn-primary">Edit</button>
+                </a>
+                    <button type="button" ng-show="management.deleteAccess" class="btn btn-danger" ng-click="management.deleteUser(user.associateID);">Delete</button>
+            </td>
+        </tr>
+
+    </table>
+
+</div>
+
+<div class="row show-hide-message" ng-show="management.successMsg" >
+<div class="alert alert-success">{{ management.successMsg }}</div>
+</div>
+
+<div class="row show-hide-message" ng-show="management.errorMsg" >
+    <div class="alert alert-danger">{{ management.errorMsg }}</div>
+</div>

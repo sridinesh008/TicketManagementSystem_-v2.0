@@ -1,0 +1,414 @@
+var app = angular.module('allTicketsController',['issueServices'])
+
+app.controller('allTicketsCtrl', function ($http,$location,$timeout,Issue,$scope,DTOptionsBuilder, DTColumnBuilder,DTColumnDefBuilder,$compile,$mdDialog ) {
+
+    var appData=this;
+    appData.Categories = ["Issue", "Support Request", "Enhancement Request"];
+    appData.mantisStatus = ["New", "Assigned", "Confirmed", "Feedback","Resolved","Closed"];
+    appData.priorities = ["Low", "Normal", "High","Immediate"];
+    appData.internalStatus = ["Assigned", "Confirmed", "Waiting For Feedback","Resolved","Closed"];
+    
+    
+
+    appData.getTickets = function(){
+        Issue.getAllTickets().then(function(data){
+            //console.log(data);
+            appData.tickets =  data.data.tickets;
+            console.log(appData.tickets);
+            console.log(appData.tickets.length);
+            $scope.tickets = data.data.tickets;
+            console.log($scope.tickets);
+        });  
+    };
+
+    
+
+    appData.getTickets();
+    
+
+    $scope.vm = {};
+    $scope.vm.dtInstance = {};   
+    $scope.vm.dtColumnDefs = [DTColumnDefBuilder.newColumnDef(2).notSortable()];
+    $scope.vm.dtOptions = DTOptionsBuilder.newOptions()
+				  .withOption('paging', true)
+                  .withOption('searching', true)
+                  .withOption('responsive', true)
+				  .withOption('info', true);
+    
+    $scope.childInfo = function(user,event){
+        //console.log(user);
+        //console.log(event);
+        var scope = $scope.$new(true);
+        scope.user = user;
+        var link = angular.element(event.currentTarget);
+        //console.log(link);
+        var icon = link.find('.glyphicon');
+        //console.log(icon);
+        var tr = link.parent().parent();
+        //console.log(tr);
+        var table = $scope.vm.dtInstance.DataTable;
+        //var table = $('#allTicketsTable').DataTable();
+        //console.log(table);
+        var row = table.row(tr);
+
+        if(row.child.isShown()){
+            icon.removeClass('glyphicon-minus-sign').addClass('glyphicon-plus-sign');
+            row.child.hide();
+            tr.removeClass('shown');
+        }else{
+            icon.removeClass('glyphicon-plus-sign').addClass('glyphicon-minus-sign');
+            row.child($compile('<div tmpl class="clerfix"></div>')(scope)).show();
+            tr.addClass('shown');
+        }	
+    };
+
+    appData.expandAll = function (expanded) {
+        $scope.$broadcast('onExpandAll', {expanded: expanded});
+    };
+    
+
+    $scope.sort = function(keyname){
+        //console.log(keyname);
+        $scope.sortKey = keyname;   //set the sortKey to the param passed
+		$scope.reverse = !$scope.reverse; //if true make it false and vice versa
+    };
+    
+    
+
+    this.createIssue = function(issueData,valid){
+        appData.loading=true;
+        appData.errorMsg= false;
+        appData.successMsg= false;
+        console.log("hai");
+        if(valid){
+            Issue.create(appData.issueData).then(function(data){  
+                if(data.data.success){
+                    appData.loading=false;
+                    appData.successMsg = data.data.message;
+                    appData.field = data.data.field;
+                }else{
+                    appData.loading=false;
+                    appData.errorMsg = data.data.message;
+                }
+            });
+        }else{
+            appData.loading=false;
+        }
+    }
+
+    $scope.showAdvanced = function(ev) {
+        //console.log(ev);
+        $mdDialog.show({
+          controller: DialogController,
+          //templateUrl: 'app/views/pages/toast/dialog1.tmpl.html',
+          template:
+            '<md-dialog class="dialog_box">' +
+            '<md-toolbar >' +
+            'Delete user confirmation message'+
+            '</md-toolbar>'+
+            '<md-dialog-content>'+
+            '<p>Are you sure you want to delete this ticket</p>'+
+            '</md-dialog-content>' +
+            '<div class="md-actions"> <md-button ng-click="deleteTickets(\''+ev+'\');">'+
+            'Delete'+
+            '</md-button>'+
+            '<md-button ng-click="hide()">' +
+            ' Close' +
+            '</md-button>' +
+            '  </div>' +
+            '</md-dialog>',
+          parent: angular.element(document.body),
+          targetEvent: ev,
+          clickOutsideToClose:true,
+          fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+        })
+        .then(function(answer) {
+          $scope.status = 'You said the information was "' + answer + '".';
+        }, function() {
+          $scope.status = 'You cancelled the dialog.';
+        });
+      };
+
+      function DialogController($scope, $mdDialog,$routeParams,Issue) {
+        $scope.hide = function() {
+          $mdDialog.hide();
+        };
+    
+        $scope.cancel = function() {
+          $mdDialog.cancel();
+        };
+    
+        $scope.answer = function(answer) {
+          $mdDialog.hide(answer);
+        };
+
+        $scope.deleteTickets = function(id) {
+            deleteObject = {};
+            deleteObject._id = id;
+            deleteObject.active = "0";
+            Issue.deleteTickets(deleteObject).then(function (data) {
+                //console.log(id);
+                console.log(data);
+                if(data.data.success){
+                    app.successMsg = data.data.message;
+                    appData.getTickets();
+                    $mdDialog.hide();
+                }else{
+                    app.errorMsg = data.data.message;
+                }
+            });
+        };
+
+
+      }
+
+});
+
+var isDlgOpen;
+app.controller('editTicketCtrl',function ($scope,$routeParams,Issue,User,$mdToast,$mdDialog) {
+    
+    var appData=this;
+    appData.Categories = ["Issue", "Support Request", "Enhancement Request"];
+    appData.mantisStatus = ["New", "Assigned", "Confirmed", "Feedback","Resolved","Closed"];
+    appData.priorities = ["Low", "Normal", "High","Immediate"];
+    appData.internalStatus = ["Assigned", "Confirmed", "Waiting For Feedback","Resolved","Closed"];
+
+    var arr = new Array();
+
+    appData.getAllUsers = function (){
+        User.getAllUsers().then(function (data) {
+            if(data.data.success){
+                
+                if(data.data.permission === "admin" || data.data.permission === "moderator"){
+                    appData.users =  data.data.users;
+                    //console.log(appData.users);
+                    appData.loading = false;
+                    appData.accessDenied = false;
+                    angular.forEach(appData.users, function (users) {
+                        arr.push({ userName: users.userName, associateID:users.associateID});
+                    });
+                    //console.log(arr);
+                    $scope.usersList = arr; 
+                   
+                }else{
+                    appData.errorMsg = "Insufficient Permisssion";
+                    appData.loading = false;
+                }
+            }else{
+                appData.errorMsg = data.data.message;
+                appData.loading = false;
+            }
+        });
+
+    }
+
+    appData.getAllUsers();
+    appData.repos = arr;
+    //console.log(appData.repos);
+
+    appData.getTicketSummaryByModule = function(){
+        Issue.getTicketSummaryByModule().then(function(data){
+            appData.TicketSummary =  data.data.TicketSummary;
+            appData.moduleList = [];
+            console.log(data);
+            for(i=0;i<appData.TicketSummary.length;i++){
+                if ((appData.moduleList.indexOf(appData.TicketSummary[i]._id))<0){
+                 appData.moduleList.push(appData.TicketSummary[i]._id);    
+                }
+            }
+            appData.moduleList.sort();
+            console.log(appData.moduleList);
+        });
+    }
+    appData.getTicketSummaryByModule();
+    //console.log(appData.moduleList);
+
+    Issue.editTickets($routeParams.mantisIssueID).then(function (data) {
+        console.log(data);
+        if(data.data.success){
+            app.currentIdVal= data.data.user._id;
+            $scope.newInternalPriority = data.data.user.internalPriority;
+            $scope.newInternalCategory = data.data.user.internalCategory;
+            $scope.newInternalStatus = data.data.user.internalStatus;
+            $scope.newMantisPriority = data.data.user.mantisPriority;
+            $scope.newMantisCategory = data.data.user.mantisCategory;
+            $scope.newMantisStatus = data.data.user.mantisStatus;
+            $scope.newMantisIssueID = data.data.user.mantisIssueID;
+            $scope.newModule = data.data.user.module;
+            $scope.newAssingedTo = data.data.user.assingedTo;
+            console.log($scope.newMantisStatus);
+            //app.newModule= data.data.user._id;
+        }else{
+            app.errorMsg = data.data.message;
+        }
+    });
+
+    $scope.showCustomToast = function() {
+        $mdToast.show({
+          hideDelay   : 3000,
+          position    : 'bottom right',
+          controller  : 'ToastCtrl',
+          templateUrl : 'app/views/pages/toast/toast-template.html'
+        });
+      };    
+      
+
+    this.updateTicketModel = function(issueData,valid,ev){
+        appData.errorMsg= false;
+        appData.successMsg= false;
+        if(valid){
+            $mdDialog.show({
+                controller: updateTicketCtrl,
+                //templateUrl: 'app/views/pages/toast/dialog1.tmpl.html',
+                template:
+                '<md-dialog class="dialog_box_update">' +
+                '<md-toolbar >' +
+                'Update Ticket Message'+
+                '</md-toolbar>'+
+                '<md-dialog-content>'+
+                '<input ng-model="editTicket.commentData" type="textbox" class="form-control"/>'+
+                '</md-dialog-content>' +
+                '<div class="md-actions"> <md-button ng-click="updateTicket()">'+
+                'Update'+
+                '</md-button>'+
+                '<md-button ng-click="hide()">' +
+                ' Close' +
+                '</md-button>' +
+                '  </div>' +
+                '</md-dialog>',
+                parent: angular.element(document.body),
+                locals: {
+                    mantisIssueID: $scope.newMantisIssueID,
+                    mantisStatus : $scope.newMantisStatus,
+                    mantisCategory : $scope.newMantisCategory,
+                    mantisPriority : $scope.newMantisPriority,
+                    internalStatus : $scope.newInternalStatus,
+                    internalCategory : $scope.newInternalCategory,
+                    internalPriority : $scope.newInternalPriority,
+                    module : $scope.newModule,
+                    assingedTo : $scope.newAssingedTo,
+                },
+                targetEvent: ev,
+                clickOutsideToClose:true,
+                fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+            })
+            .then(function(answer) {
+                $scope.status = 'You said the information was "' + answer + '".';
+            }, function() {
+                $scope.status = 'You cancelled the dialog.';
+            });
+        }else{
+            appData.loading=false;
+        }
+
+    };
+
+
+    function updateTicketCtrl($scope, $mdDialog,$routeParams,Issue,mantisIssueID,mantisStatus,mantisCategory,mantisPriority,internalStatus,internalCategory,internalPriority,module,assingedTo,DataTransfer) {
+        $scope.hide = function() {
+          $mdDialog.hide();
+        };
+    
+        $scope.cancel = function() {
+          $mdDialog.cancel();
+        };
+    
+        $scope.answer = function(answer) {
+          $mdDialog.hide(answer);
+        };
+
+        $scope.getDetails = function () {
+            console.log('Going to call fullname method from second controller');
+            //Reading the method in first controller inside the second one
+            var functionItem = DataTransfer.getUserDetails();
+            var details = functionItem();
+            console.log(details);
+        }
+
+        var appData=this;
+        $scope.updateTicket = function(){
+            appData.loading=true;
+            appData.errorMsg= false;
+            appData.successMsg= false;
+            console.log("hai"+mantisIssueID);
+            ticketObject ={};
+            //if(valid){
+                console.log("hai new"+app.currentIdVal);
+                ticketObject._id = app.currentIdVal;
+                ticketObject.mantisIssueID = mantisIssueID;
+                ticketObject.mantisStatus = mantisStatus;
+                ticketObject.mantisCategory = mantisCategory;
+                ticketObject.mantisPriority = mantisPriority;
+                ticketObject.internalStatus = internalStatus;
+                ticketObject.internalCategory = internalCategory;
+                ticketObject.internalPriority = internalPriority;
+                ticketObject.module = module;
+                ticketObject.assingedTo = assingedTo;
+                //console.log("hai new"+$scope.newAssingedTo);
+                console.log(ticketObject);
+                Issue.updateTickets(ticketObject).then(function(data){  
+                    console.log(data);
+                    if(data.data.success){
+                        console.log(data);
+                        appData.loading=false;
+                        appData.successMsg = data.data.message;
+                        appData.field = data.data.field;
+                        console.log(data.data.message);
+                        //$scope.showCustomToast();
+                    }else{
+                        appData.loading=false;
+                        appData.errorMsg = data.data.message;
+                    }
+                });
+            //}else{
+                //appData.loading=false;
+            //}
+        };
+      }
+
+
+   
+
+    
+
+    $scope.checkIfEnterKeyWasPressed = function($event){
+        var charCode = ($event.charCode) ? $event.which : $event.keyCode;
+	         if (charCode > 31 && (charCode < 48 || charCode > 57)){
+	            return false;
+        }
+        return true;
+    };
+});
+
+
+  app.controller('ToastCtrl', function($scope, $mdToast, $mdDialog) {
+
+    $scope.closeToast = function() {
+      if (isDlgOpen) return;
+
+      $mdToast
+        .hide()
+        .then(function() {
+          isDlgOpen = false;
+        });
+    };
+
+    $scope.openMoreInfo = function(e) {
+      if ( isDlgOpen ) return;
+      isDlgOpen = true;
+
+      $mdDialog
+        .show($mdDialog
+          .alert()
+          .title('More info goes here.')
+          .textContent('Something witty.')
+          .ariaLabel('More info')
+          .ok('Got it')
+          .targetEvent(e)
+        )
+        .then(function() {
+          isDlgOpen = false;
+        });
+    };
+  });
+

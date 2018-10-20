@@ -1,0 +1,51 @@
+<div class="page-header">
+    <h1 style="width: 21.5%;">Add Resolution</h1> 
+</div>
+
+<form name="repoForm" ng-submit="repo.addResolution(resolutionData,repoForm.$valid);" novalidate>
+        <div class="col-lg-12 nextLine_padding">
+            <div class="col-lg-12 nextLine_padding">
+                <label>Sample Ticket IDs:</label>
+                <textarea type="text" class="form-control" name="sampleTicket"  ng-maxlength="500" placeholder="Please enter SampleTicket" ng-model="repo.resolutionData.sampleTicketIDs" required></textarea>
+            </div>
+            <div class="col-lg-12 nextLine_padding">
+                    <label>For What?</label>
+                    <textarea type="text" class="form-control" name="forWhat"  ng-maxlength="500" placeholder="Please enter detailed description of the ticket for which the resolution is added" ng-model="repo.resolutionData.forWhat" required></textarea>
+                    <p class="has-error-block" ng-show="(repoForm.forWhat.$touched && repoForm.forWhat.$error.required) || (repoForm.$submitted && repoForm.forWhat.$error.required)">This field is required.</p>
+                </div>
+            <div class="col-lg-12 nextLine_padding">
+                <label>Pre-Requisite:</label>
+                <textarea type="text" ng-trim="false"  class="form-control" name="prerequisite"  ng-maxlength="500" placeholder="Please enter pre-requisite steps if any in detail" ng-model="repo.resolutionData.preRequisite" required></textarea>
+                <p class="has-error-block" ng-show="(repoForm.prerequisite.$touched && repoForm.prerequisite.$error.required) || (repoForm.$submitted && repoForm.prerequisite.$error.required)">This field is required.</p>
+            </div>
+            <div class="col-lg-12 nextLine_padding">
+                <label>How to Resolve? or Resolution Text:</label>
+                <textarea type="text" ng-trim="false" class="form-control" name="resolution"  ng-maxlength="500" placeholder="Please enter resolution steps in detail" ng-model="repo.resolutionData.resolution" required></textarea>
+                <p class="has-error-block" ng-show="(repoForm.resolution.$touched && repoForm.resolution.$error.required) || (repoForm.$submitted && repoForm.resolution.$error.required)">This field is required.</p>
+            </div>
+            <div class="col-lg-12 nextLine_padding">
+                <label>How to Verify?</label>
+                <textarea type="text" ng-trim="false" class="form-control" name="verifySteps"  ng-maxlength="500" placeholder="Please enter verificatioon Steps in detail" ng-model="repo.resolutionData.verifySteps" required></textarea>
+                <p class="has-error-block" ng-show="(repoForm.verifySteps.$touched && repoForm.verifySteps.$error.required) || (repoForm.$submitted && repoForm.verifySteps.$error.required)">This field is required.</p>
+            </div>
+            <div class="col-lg-12 nextLine_padding" style="margin-top:15px">
+                <button type="submit" style="float: left;" class="btn btn-success clear" >ADD</button>
+                <button type="button" style="float: left;margin-left: 15px;" ng-click="repo.reset()" class="btn btn-primary " >Reset</button>
+            </div>
+        </div>
+</form>
+
+</br>
+<div class="jumbotron text-center" ng-show="repo.loading">
+    <span class="glyphicon glyphicon-repeat spinner"></span>
+    <pLoading...></p>
+</div>
+<div class="col-xs-12 nomarginpadding pull-left row show-hide-message"  ng-show="repo.successMsg" >
+        <div class="alert alert-success">{{ repo.successMsg }}</div>
+        <div ng-show="repo.newModuleMsg" class="alert alert-success">New Module <strong>{{ repo.searchTextModule }}</strong> has been added</div>
+    </div>
+    
+    <div class="col-xs-12 nomarginpadding pull-left row show-hide-message"  ng-show="repo.errorMsg" >
+            <div class="alert alert-danger">{{repo.field}}+"-"+{{ repo.errorMsg }}</div>
+    </div>
+</br>

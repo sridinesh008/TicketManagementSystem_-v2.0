@@ -1,0 +1,30 @@
+<div class="page-header" style="border-bottom: none">
+    <h1 class="pull-left" style="margin-bottom: 30px;">Resultion Repo</h1> 
+    <a  class="resolution_btn pull-right" href="/addResolution"><button class="btn btn-success"  style="float: right;">Add Resolution</button></a>
+</div>   
+</div>
+<input class="form-control" placeholder="Enter any Keyword for Searching" style="margin-bottom: 15px;" ng-model="searchString"></input>
+<div class="col-xs-12 panel-group pull-left nomarginpadding"   id="accordion" ng-cloak>
+    <div class="panel panel-default" ng-repeat= "resolutionData in repo.resolutionDataSet | filter:searchString">
+      <div class="panel-heading">
+        <label><h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" style="font-weight:bold !important" data-target="#{{resolutionData._id}}">{{resolutionData.forWhat}}</a>
+        </h4></label>
+        <a href="/editResolution/{{resolutionData._id}}"><button type="button" style="padding-bottom: 3px;" class="btn btn-default btn pull-right" ><md-tooltip md-direction="bottom">Edit Resolution</md-tooltip><i class="glyphicon glyphicon-pencil"></i></button></a>
+      </div>
+      <div id="{{resolutionData._id}}" class="panel-collapse collapse marginLeft" style="padding: 10px 0px 0px 0px;">
+        <label class="">Created By :&nbsp;</label>{{resolutionData.createdBy}} <label class="marginLeft ">Created Date :&nbsp;</label>{{resolutionData.createdDate}}
+        <label  class="marginLeft nextLine_padding">Updated By :&nbsp;</label>{{resolutionData.updatedBy}} <label class="marginLeft ">Updated Date :&nbsp;</label>{{resolutionData.updatedDate}}
+        </br>
+        <label class>Sample Ticket ID(s):</label>
+        <div class="panel-body nextLine_padding marginRight"><pre>{{resolutionData.sampleTicketIDs}}</pre></div>
+        <label>Pre-Requisite:</label>
+        <div class="panel-body nextLine_padding marginRight"><pre>{{resolutionData.preRequisite}}</pre></div>
+        <label>Resolution:</label>
+        <div class="panel-body nextLine_padding marginRight"><pre>{{resolutionData.resolution}}</pre></div>
+        <label>Verification Steps:</label>
+        <div class="panel-body nextLine_padding marginRight"><pre>{{resolutionData.verifySteps}}</pre></div>
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,71 @@
+<div class="page-header">
+    <h1 style="border-bottom:none !important">Hey mate, Register Here !!!</h1> 
+</div>
+
+<form name="regForm" ng-submit="regCtrl.regUser(userData,regForm.$valid);" novalidate>
+    <!--name-->
+    <div ng-class="{'has-success':(!regForm.userName.$pristine && regForm.userName.$valid),'has-error':(!regForm.userName.$pristine && !regForm.userName.$valid) || (!regForm.userName.$valid && regForm.$submitted)}">
+        <label >Name:</label>
+        <input type="text" class="form-control" name="userName" ng-minlength="3" ng-maxlength="20" placeholder="Please Enter Name" ng-pattern="/^([a-zA-Z]{3,30})+((\s[a-zA-Z]{3,30})+)$/" ng-model="regCtrl.userData.userName" required></input>
+        <p class="error help-block" ng-show="(!regForm.userName.$pristine && regForm.userName.$error.required) || (regForm.$submitted && regForm.userName.$error.required)">Please enter the Name</p>
+        <ul ng-show="(!regForm.userName.$pristine && regForm.userName.$error.pattern) || (!regForm.userName.$pristine && regForm.userName.$error.minlength) || (!regForm.userName.$pristine && regForm.userName.$error.maxlength)" class="help-block">
+            <li>Must have a space in between first and last name</li>
+            <li>Must not contain any special characters</li>
+            <li>Must not contain any numbers</li>
+            <li>Must be at least 3 characters but no more than 20</li>
+        </ul>
+    </div>
+    </br>
+    <!--email-->
+    <div ng-class="{'has-success':(!regForm.email.$pristine && regForm.email.$valid),'has-error':(!regForm.email.$pristine && !regForm.email.$valid) || (!regForm.email.$valid && regForm.$submitted)}">
+        <label >E-Mail:</label>
+        <input type="text" class="form-control" name="email"  ng-minlength="3" ng-maxlength="30" ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/" placeholder="Please Enter E-Mail" ng-model="regCtrl.userData.email" required></input>
+        <p class="error help-block" ng-show="(!regForm.email.$pristine && regForm.email.$error.required) || (regForm.$submitted && regForm.email.$error.required)">Please enter the E-mail ID</p>
+        <ul ng-show="(!regForm.email.$pristine && regForm.email.$error.pattern) || (!regForm.email.$pristine && regForm.email.$error.minlength) || (!regForm.email.$pristine && regForm.email.$error.maxlength)" class="help-block">
+            <li>Email is Invalid</li>
+            <li>Must be at least 3 characters but no more than 30</li>
+        </ul>
+    </div>
+    </br>
+    <!--associate ID-->
+    <div ng-class="{'has-success':(!regForm.associateID.$pristine && regForm.associateID.$valid),'has-error':(!regForm.associateID.$pristine && !regForm.associateID.$valid) || (!regForm.associateID.$valid && regForm.$submitted)}">
+    <label >Associate ID:</label>
+    <input type="number" class="form-control" name="associateID" ng-minlength="3" ng-maxlength="30" ng-pattern="/^([0-9]{6})$/" placeholder="Please Enter Associate ID" ng-model="regCtrl.userData.associateID" required></input>
+    <p class="error help-block" ng-show="(!regForm.associateID.$pristine && regForm.associateID.$error.required) || (regForm.$submitted && regForm.associateID.$error.required)">Please enter the Associate ID</p>
+        <ul ng-show="(!regForm.associateID.$pristine && regForm.associateID.$error.pattern) || (!regForm.associateID.$pristine && regForm.associateID.$error.minlength) || (!regForm.associateID.$pristine && regForm.associateID.$error.maxlength)" class="help-block">
+            <li>Associate ID can contain only numbers and character length should be 6</li>
+        </ul>
+    </div>
+    </br>
+    <!--password-->
+    <div ng-class="{'has-success':(!regForm.password.$pristine && regForm.password.$valid),'has-error':(!regForm.password.$pristine && !regForm.password.$valid) || (!regForm.password.$valid && regForm.$submitted)}">
+        <label >Password:</label>
+        <input type="password" class="form-control" ng-minlength="8" ng-maxlength="30" ng-pattern="/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[\W])(?=.*?[\d]).{8,30}$/" name="password" placeholder="Please Enter Password" ng-model="regCtrl.userData.password" required></input>
+        <p class="error help-block" ng-show="(!regForm.password.$pristine && regForm.password.$error.required) || (regForm.$submitted && regForm.password.$error.required)">Please enter the Password</p>
+        <ul ng-show="(!regForm.password.$pristine && regForm.password.$error.pattern) || (!regForm.password.$pristine && regForm.password.$error.minlength) || (!regForm.password.$pristine && regForm.password.$error.maxlength)" class="help-block">
+                <li>Password should not have space.</li>
+                <li>It must contain at least One Lowercase</li> 
+                <li>It must contain at least Uppercase.</li>
+                <li>It must contain at least One Special Character & One Number.</li>  
+                <li>length should be in between 8 to 30.</li>
+            </ul>
+    </div>
+    </br>
+
+    <button type="submit" class="btn btn-primary" >Let's Get In</button>
+</form>
+
+</br>
+<div class="jumbotron text-center" ng-show="regCtrl.loading">
+    <span class="glyphicon glyphicon-repeat spinner"></span>
+    <pLoading...></p>
+</div>
+</br>
+
+<div class="row show-hide-message" ng-show="regCtrl.successMsg" >
+    <div class="alert alert-success">{{ regCtrl.successMsg }}</div>
+</div>
+
+<div class="row show-hide-message" ng-show="regCtrl.errorMsg" >
+        <div class="alert alert-danger">{{ regCtrl.errorMsg }}</div>
+</div>

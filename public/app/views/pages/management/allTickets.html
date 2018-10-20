@@ -1,0 +1,297 @@
+<div class="page-header">
+        <h1 style="width: 14.5%;">All Tickets</h1> 
+    </div>
+    
+    </br>
+    <div class="jumbotron text-center" ng-show="issue.loading">
+    <span class="glyphicon glyphicon-repeat spinner"></span>
+    <p>Loading...</p>
+    </div>
+
+    <div class="col-xs-12 panel-group pull-left nomarginpadding"   id="accordion">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <label><h4 class="panel-title">
+              <a data-toggle="collapse" data-parent="#accordion" style="font-weight:bold !important" data-target="#searchAccordion">Search Filters</a>
+            </h4></label>
+          </div>
+          <div id="searchAccordion" class="panel-collapse collapse pull-left" style="border:solid #ccc 1px;padding: 25px 0px;">
+                <div class="col-lg-12 nextLine_padding">
+                        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" layout="column" ng-cloak>
+                      
+                        <label>External Status:</label>          
+                        <md-chips ng-model="allTickets.selectedMantisStatusChip" md-autocomplete-snap
+                                    md-transform-chip="allTickets.transformChip($chip)"
+                                    md-require-match="allTickets.autocompleteDemoRequireMatch">
+                            
+                            <md-autocomplete
+                                md-selected-item="allTickets.selectedItem"
+                                md-search-text="allTickets.searchText"
+                                md-items="item in allTickets.mantisStatus | filter:allTickets.searchText"
+                                md-item-text="item">
+                              <span md-highlight-text="allTickets.searchText">{{item}}</span>
+                            </md-autocomplete>
+                            <md-chip-template>
+                              <span>
+                                <strong>{{$chip}}</strong>
+                              </span>
+                            </md-chip-template>
+                          </md-chips>
+                      </div>
+                
+                        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" layout="column" ng-cloak>
+                                <label>Internal Status:</label>  
+                                <md-chips ng-model="allTickets.selectedInternalStatusChip" md-autocomplete-snap
+                                        md-transform-chip="allTickets.transformChip($chip)"
+                                        md-require-match="allTickets.autocompleteDemoRequireMatchInternal">
+                                <md-autocomplete
+                                md-selected-item="allTickets.selectedItemInternal"
+                                md-search-text="allTickets.searchInternalText"
+                                md-items="item in allTickets.internalStatus | filter:allTickets.searchInternalText"
+                                md-item-text="item">
+                                <span md-highlight-text="allTickets.searchInternalText">{{item}}</span>
+                                </md-autocomplete>
+                                <md-chip-template>
+                                <span>
+                                <strong>{{$chip}}</strong>
+                                </span>
+                                </md-chip-template>
+                                </md-chips>
+                        </div>
+                
+                        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" layout="column" ng-cloak>
+                                <label>External Category:</label>  
+                                <md-chips ng-model="allTickets.selectedExternalCategoryChip" md-autocomplete-snap
+                                        md-transform-chip="allTickets.transformChip($chip)"
+                                        md-require-match="allTickets.autocompleteDemoRequireMatchExternal">
+                                <md-autocomplete
+                                md-selected-item="allTickets.selectedItemExternal"
+                                md-search-text="allTickets.searchExternalText"
+                                md-items="item in allTickets.Categories | filter:allTickets.searchExternalText"
+                                md-item-text="item">
+                                <span md-highlight-text="allTickets.searchExternalText">{{item}}</span>
+                                </md-autocomplete>
+                                <md-chip-template>
+                                <span>
+                                <strong>{{$chip}}</strong>
+                                </span>
+                                </md-chip-template>
+                                </md-chips>
+                        </div>
+                </div>
+
+                <div class="col-lg-12 nextLine_padding">
+                        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" layout="column" ng-cloak>
+                      
+                        <label>Internal Category:</label>          
+                        <md-chips ng-model="allTickets.selectedInternalCategoryChip" md-autocomplete-snap
+                                    md-transform-chip="allTickets.transformChip($chip)"
+                                    md-require-match="allTickets.autocompleteInternalCategory">
+                            
+                            <md-autocomplete
+                                md-selected-item="allTickets.selectedItemInternalCategory"
+                                md-search-text="allTickets.searchInternalCategory"
+                                md-items="item in allTickets.Categories | filter:allTickets.searchInternalCategory"
+                                md-item-text="item">
+                              <span md-highlight-text="allTickets.searchInternalCategory">{{item}}</span>
+                            </md-autocomplete>
+                            <md-chip-template>
+                              <span>
+                                <strong>{{$chip}}</strong>
+                              </span>
+                            </md-chip-template>
+                          </md-chips>
+                      </div>
+                
+                        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" layout="column" ng-cloak>
+                                <label>External Priority:</label>  
+                                <md-chips ng-model="allTickets.selectedExternalPriorityChip" md-autocomplete-snap
+                                        md-transform-chip="allTickets.transformChip($chip)"
+                                        md-require-match="allTickets.autocompleteExternalPriority">
+                                <md-autocomplete
+                                md-selected-item="allTickets.selectedItemExternalPriority"
+                                md-search-text="allTickets.searchExternalPriorityText"
+                                md-items="item in allTickets.priorities | filter:allTickets.searchExternalPriorityText"
+                                md-item-text="item">
+                                <span md-highlight-text="allTickets.searchExternalPriorityText">{{item}}</span>
+                                </md-autocomplete>
+                                <md-chip-template>
+                                <span>
+                                <strong>{{$chip}}</strong>
+                                </span>
+                                </md-chip-template>
+                                </md-chips>
+                        </div>
+                
+                        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" layout="column" ng-cloak>
+                                <label>Internal Priority:</label>  
+                                <md-chips ng-model="allTickets.selectedInternalPriorityChip" md-autocomplete-snap
+                                        md-transform-chip="allTickets.transformChip($chip)"
+                                        md-require-match="allTickets.autocompleteInternalPriority">
+                                <md-autocomplete
+                                md-selected-item="allTickets.selectedItemInternalPriority"
+                                md-search-text="allTickets.searchInternalPriorityText"
+                                md-items="item in allTickets.priorities | filter:allTickets.searchInternalPriorityText"
+                                md-item-text="item">
+                                <span md-highlight-text="allTickets.searchInternalPriorityText">{{item}}</span>
+                                </md-autocomplete>
+                                <md-chip-template>
+                                <span>
+                                <strong>{{$chip}}</strong>
+                                </span>
+                                </md-chip-template>
+                                </md-chips>
+                        </div>
+                </div>
+
+                <div class="col-lg-12 nextLine_padding">
+                        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" layout="column" ng-cloak>
+                      
+                        <label>Module:</label>          
+                        <md-chips ng-model="allTickets.moduleChip" md-autocomplete-snap
+                                    md-transform-chip="allTickets.transformChip($chip)"
+                                    md-require-match="allTickets.autocompleteModule">
+                            
+                            <md-autocomplete
+                                md-selected-item="allTickets.selectedModule"
+                                md-search-text="allTickets.searchModule"
+                                md-items="item in allTickets.moduleList | filter:allTickets.searchModule"
+                                md-item-text="item">
+                              <span md-highlight-text="allTickets.searchModule">{{item}}</span>
+                            </md-autocomplete>
+                            <md-chip-template>
+                              <span>
+                                <strong>{{$chip}}</strong>
+                              </span>
+                            </md-chip-template>
+                          </md-chips>
+                      </div>
+                
+                        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" layout="column" ng-cloak>
+                                <label>Assign To:</label>  
+                                <md-chips ng-model="allTickets.assignToChip" md-autocomplete-snap
+                                        md-transform-chip="allTickets.transformChip($chip)"
+                                        md-require-match="allTickets.autocompleteAssignTo">
+                                <md-autocomplete
+                                md-selected-item="allTickets.selectedUsers"
+                                md-search-text="allTickets.searchRepos"
+                                md-items="item in allTickets.repos | filter:allTickets.searchRepos"
+                                md-item-text="item">
+                                <span md-highlight-text="allTickets.searchRepos">{{item.associateID}}</span>&nbsp;&nbsp;<strong>{{item.userName}}</strong></span>
+                                </md-autocomplete>
+                                <md-chip-template>
+                                <span>
+                                <strong>{{$chip.associateID}}</strong>
+                                </span>
+                                </md-chip-template>
+                                </md-chips>
+                        </div>
+                        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" layout="column" ng-cloak>
+                                <div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 nomarginpadding">
+                                        <label class="invisible">Assign To:</label>  
+                                        <button type="button" ng-click="showSearchResults(showData)" class="btn btn-success clear">Search</button>
+                                </div>
+                        </div>
+                </div>
+
+
+
+          </div>
+        </div>
+     </div>
+
+    
+
+        
+
+        
+        
+        <div class="row">
+            <div class="col-sm-12 table_padding">
+        <table class="table table-striped table-bordered" datatable="ng" dt-options="vm.dtOptions"  id="allTicketsTable" dt-instance="vm.dtInstance"  width="100%" dt-column-defs="vm.dtColumnDefs">
+
+                <thead>
+                <tr>
+                    <th colspan="1">Mantis IssueID</th>
+                    <th class="text-center" colspan="3">Mantis</th>
+                    <th class="text-center" colspan="3">Internal</th>
+                    <th colspan="4"></th>
+                </tr>
+                <tr>
+                    <!--<th></th>-->
+                    <th ng-click="sort('mantisIssueID')">Mantis IssueID
+                            <span class="glyphicon sort-icon" ng-show="sortKey=='mantisIssueID'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                    </th>
+                    <th ng-click="sort('mantisStatus')">Status
+                            <span class="glyphicon sort-icon" ng-show="sortKey=='mantisStatus'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                    </th>
+                    <th ng-click="sort('mantisCategory')">Category
+                            <span class="glyphicon sort-icon" ng-show="sortKey=='mantisCategory'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                    </th>
+                    <th ng-click="sort('mantisPriority')">Priority
+                            <span class="glyphicon sort-icon" ng-show="sortKey=='mantisPriority'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                    </th>
+                    <th ng-click="sort('internalStatus')">Status
+                            <span class="glyphicon sort-icon" ng-show="sortKey=='internalStatus'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                    </th>
+                    <th ng-click="sort('internalCategory')">Category
+                            <span class="glyphicon sort-icon" ng-show="sortKey=='internalCategory'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                    </th>
+                    <th ng-click="sort('internalPriority')">Priority
+                            <span class="glyphicon sort-icon" ng-show="sortKey=='internalPriority'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                    </th>
+                    <th ng-click="sort('createdDate')">Created Date
+                                <span class="glyphicon sort-icon" ng-show="sortKey=='createdDate'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                    <th ng-click="sort('module')">Module
+                        <span class="glyphicon sort-icon" ng-show="sortKey=='module'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                    </th>
+                    <th ng-click="sort('assingedTo')">Name / Assingned To
+                                <span class="glyphicon sort-icon" ng-show="sortKey=='assingedTo'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                    <th ng-show="main.isLoggedIn && main.authorized">Action</th>
+                    
+                </tr>
+                </thead>
+                
+                
+                <tr ng-repeat="ticket in allTickets.tickets">
+                                <!--<td><a class="green shortinfo" href="javascript:;" ng-click="childInfo(user, $event)" title="Click to view more"><i class="glyphicon glyphicon-plus-sign"/></a> </td>-->
+                                <td>{{ticket.mantisIssueID}}</td>
+                                <td>{{ticket.mantisStatus}}</td>
+                                <td>{{ticket.mantisCategory}}</td>
+                                <td>{{ticket.mantisPriority}}</td>
+                                <td>{{ticket.internalStatus}}</td>
+                                <td>{{ticket.internalCategory}}</td>
+                                <td>{{ticket.internalPriority}}</td>
+                                <td>{{ticket.createdDate}}</td>
+                                <td>{{ticket.module}}</td>
+                                <td>{{ticket.assingedTo}}</td>
+                                <td ng-show="main.isLoggedIn && main.authorized">
+                                        <div class="btn-group">
+                                                <a href="/editTickets/{{ticket._id}}"><button type="button" class="btn btn-default pull-left btn" ng-click="edit($index);"><md-tooltip md-direction="top">Edit Ticket</md-tooltip><i class="glyphicon glyphicon-pencil"></i></button></a>  
+                                                <button  type="button" class="btn btn-default pull-left btn" ng-click="showAdvanced(ticket.mantisIssueID)"><md-tooltip md-direction="top">Delete Ticket</md-tooltip><i class="glyphicon glyphicon-trash"></i></button>
+                                                <a href="mailto:{{ticket.assingedTo}}?subject=Priority Ticket:#{{ticket.mantisIssueID}}&body=Hi,&#13;Please Look in to this issue on priority.">
+                                                        <button type="button" class="btn btn-default pull-left btn">
+                                                                <md-tooltip md-direction="bottom">Mail</md-tooltip>
+                                                                <i class="glyphicon glyphicon-envelope"></i>
+                                                        </button>
+                                                </a>
+                                                <button  type="button" ng-click="showCommentDisplay(ticket.mantisIssueID)" class="btn btn-default pull-left btn"><md-tooltip md-direction="bottom">Comment Histrory</md-tooltip><i class="glyphicon glyphicon-comment"></i></button>
+                                        </div>
+                                </td>
+                </tr>
+            </table>
+
+            
+
+        </div>
+        </div>
+    
+    <div class="row show-hide-message" ng-show="issue.successMsg" >
+    <div class="alert alert-success">{{ issue.successMsg }}</div>
+    </div>
+    
+    <div class="row show-hide-message" ng-show="issue.errorMsg" >
+        <div class="alert alert-danger">{{ issue.errorMsg }}</div>
+    </div>

@@ -1,0 +1,37 @@
+<md-dialog class="dialog_box">
+        <div class="col-xs-12 nomarginpadding">
+        <md-toolbar >
+        Comments History
+        </md-toolbar>
+        <md-dialog-content>
+            <md-virtual-repeat-container id="vertical-container">
+                <div md-virtual-repeat="item in dialogCtrl.comments" class="repeated-item" flex>
+                    <span> <b>{{ item.createdBy }} </b></span>
+                    <span>{{item.updatedDate}}</span>
+                    <p> {{ item.commentText }} </p>
+                </div>
+            </md-virtual-repeat-container>
+        </md-dialog-content>
+        <div class="col-xs-12 paddingBottom">
+            <button class="btn btn-primary pull-right clear" ng-click="hide()">OK</button>
+        </div>
+        </div>
+        </div>
+        </md-dialog>
+
+<!--<md-dialog aria-label="material virtual repeater">
+        <md-toolbar class="md-primary md-hue-1">
+          <h2 class="md-toolbar-tools">
+                  <span>Comments History</span>
+              </h2>
+        </md-toolbar>
+        <md-dialog-content layout="column">
+          <div class="virtualRepeatdemoVerticalUsage">
+            <md-virtual-repeat-container id="vertical-container">
+              <div md-virtual-repeat="item in dialogCtrl.comments" class="repeated-item" flex>
+                <p> {{ item.commentText }} </p>
+              </div>
+            </md-virtual-repeat-container>
+          </div>
+        </md-dialog-content>
+      </md-dialog>-->

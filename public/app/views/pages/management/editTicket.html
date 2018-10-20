@@ -1,0 +1,294 @@
+<div class="page-header">
+        <h1 style="width:16.5%">Edit Tickets</h1> 
+</div>
+
+
+<form name="issueForm" ng-submit="editTicket.updateTicketModel(issueData,issueForm.$valid);" novalidate>
+        <div class="col-lg-12 nextLine_padding">
+        <div class="col-lg-3">
+            <label>Issue ID:</label>
+            <input type="text" class="form-control" name="mantisIssueID" ng-keydown="checkIfEnterKeyWasPressed($event)"  ng-maxlength="9" placeholder="Please Enter Mantis Issue ID"  ng-model="newMantisIssueID" ng-readonly="true" required></input>
+            <p class="has-error-block" ng-show="(issueForm.mantisIssueID.$touched && issueForm.mantisIssueID.$error.required) || (issueForm.$submitted && issueForm.mantisIssueID.$error.required)">This field is required.</p>
+        </div>
+        <div class="col-lg-3">
+            <label>Mantis Status:</label>
+            <select  class="form-control" name="mantisStatus" ng-options="Status for Status in editTicket.mantisStatus" ng-model="newMantisStatus" required>
+                    <option value="">Select an option</option>
+            </select>
+            <p class="has-error-block" ng-show="(issueForm.mantisStatus.$touched && issueForm.mantisStatus.$error.required) || (issueForm.$submitted && issueForm.mantisStatus.$error.required)">This field is required.</p>
+        </div>
+        <div class="col-lg-3">
+        <label>Mantis Category:</label>
+        <select  class="form-control" name="mantisCategory" ng-options="Category for Category in editTicket.Categories" ng-model="newMantisCategory" required>
+            <option value="">Select an option</option>
+        </select>
+        <p class="has-error-block" ng-show="(issueForm.mantisCategory.$touched && issueForm.mantisCategory.$error.required) || (issueForm.$submitted && issueForm.mantisCategory.$error.required)">This field is required.</p>
+        </div>
+        <div class="col-lg-3">
+            <label>Mantis Priority:</label>
+            <select  class="form-control" name="mantisPriority" ng-options="Priority for Priority in editTicket.priorities" ng-model="newMantisPriority" required>
+                    <option value="">Select an option</option>
+            </select>
+            <p class="has-error-block" ng-show="(issueForm.mantisPriority.$touched && issueForm.mantisPriority.$error.required) || (issueForm.$submitted && issueForm.mantisPriority.$error.required)">This field is required.</p>
+        </div>
+        </div>
+        
+        <div class="col-lg-12 nextLine_padding">
+        <div class="col-lg-3">
+            <label>Module:</label>
+            <md-content class="noBackground" layout-padding layout="column">
+                    <md-autocomplete
+                        id="custom-template-module" required
+                        md-input-name="module"
+                        md-selected-item="newModule"
+                        md-search-text="editTicket.searchTextModule"
+                        md-items="item in editTicket.moduleList | filter:editTicket.searchTextModule"
+                        md-item-text="item"
+                        md-min-length="0"
+                        placeholder="Please enter Modele Name"
+                        md-menu-class="autocomplete-custom-template"
+                        md-menu-container-class="custom-container">
+                        <md-item-template>
+                          <span md-highlight-text="editTicket.searchTextModule">{{item}}</span>
+                        </md-item-template>
+                        <md-not-found>
+                          Module Does not exist.On Submit this module will be added.
+                        </md-not-found>
+                    </md-autocomplete>
+            </md-content>
+            <!--<input type="text" class="form-control" name="module"   placeholder="Please Enter module"  ng-model="newModule" required></input>-->
+            <p class="has-error-block" ng-show="(issueForm.module.$touched && issueForm.module.$error.required) || (issueForm.$submitted && issueForm.module.$error.required)">This field is required.</p>
+        </div>
+        <div class="col-lg-3">
+            <label>Internal Status:</label>
+            <select  class="form-control" name="internalStatus" ng-options="StatusInternal for StatusInternal in editTicket.mantisStatus" ng-model="newInternalStatus" required>
+                    <option value="">Select an option</option>
+            </select>
+            <p class="has-error-block" ng-show="(issueForm.internalStatus.$touched && issueForm.internalStatus.$error.required) || (issueForm.$submitted && issueForm.internalStatus.$error.required)">This field is required.</p>
+        </div>
+        <div class="col-lg-3">
+            <label>Internal Category:</label>
+            <select  class="form-control" name="internalCategory" ng-options="CategoryInternal for CategoryInternal in editTicket.Categories" ng-model="newInternalCategory" required>
+                    <option value="">Select an option</option>
+            </select>
+            <p class="has-error-block" ng-show="(issueForm.internalCategory.$touched && issueForm.internalCategory.$error.required) || (issueForm.$submitted && issueForm.internalCategory.$error.required)">This field is required.</p>
+        </div>
+        <div class="col-lg-3">
+            <label>Internal Priority:</label>
+            <select  class="form-control" name="internalPriority" ng-options="PriorityInternal for PriorityInternal in editTicket.priorities" ng-model="newInternalPriority" required>
+                    <option value="">Select an option</option>
+            </select>
+            <p class="has-error-block" ng-show="(issueForm.internalPriority.$touched && issueForm.internalPriority.$error.required) || (issueForm.$submitted && issueForm.internalPriority.$error.required)">This field is required.</p>
+        </div>  
+    </br>
+    </br>
+        </div>
+    
+        <div class="col-lg-12 nextLine_padding">
+        <div class="col-lg-3">
+            <label>Assing to:</label>
+            <md-content class="noBackground" layout-padding layout="column">
+                    <md-autocomplete
+                        id="custom-template" required
+                        md-input-name="assingedTo"
+                        md-selected-item="newAssingedTo"
+                        md-search-text="editTicket.searchText"
+                        md-items="item in editTicket.repos | filter:editTicket.searchText"
+                        md-item-text="item.associateID"
+                        md-min-length="0"
+                        placeholder="Please enter Assignee Name"
+                        md-menu-class="autocomplete-custom-template"
+                        md-menu-container-class="custom-container">
+                        <md-item-template>
+                          <span md-highlight-text="editTicket.searchText">{{item.associateID}}</span>&nbsp;&nbsp;<strong>{{item.userName}}</strong>
+                        </md-item-template>
+                        <md-not-found>
+                                No  data  matching with "{{editTicket.searchText}}"
+                        </md-not-found>
+                    </md-autocomplete>
+                </md-content>
+            <!--<input type="text" class="form-control" name="assingedTo"  ng-pattern="/^[0-9]*$/" placeholder="Please Enter Internal Status" ng-model="newAssingedTo" required></input>-->
+            <p class="has-error-block" ng-show="(issueForm.assingedTo.$touched && issueForm.assingedTo.$error.required) || (issueForm.$submitted && issueForm.assingedTo.$error.required)">This field is required.</p>
+        </div>
+        <div class="col-lg-6">
+            <label>Ticket Summary:</label>
+            <textarea type="text" class="form-control" name="mantisTicketSummary"  ng-maxlength="250" placeholder="Please Enter Ticket Summary" ng-model="mantisTicketSummary" required></textarea>
+            <p class="has-error-block" ng-show="(issueForm.mantisTicketSummary.$touched && issueForm.mantisTicketSummary.$error.required) || (issueForm.$submitted && issueForm.mantisTicketSummary.$error.required)">This field is required.</p>
+        </div>
+        <div class="col-lg-3">
+            <label class="col-xs-12 invisible">Assing to:</label>
+            <button type="submit" class="btn btn-primary clear" >Update</button>
+            <button type="button" ng-click="showCommentDisplay(newMantisIssueID)" class="btn btn-primary clear" >Comments&nbsp;<i class="glyphicon glyphicon-comment"></i></button>
+        </div>
+        </div>
+    </form>
+
+    <!--<div class="col-xs-12 nomarginpadding pull-left row show-hide-message" ng-show="editTicket.successMsg" >
+        <div class="alert alert-success">{{ editTicket.successMsg }}</div>
+    </div>-->
+    
+    <div class="col-xs-12 nomarginpadding pull-left row show-hide-message" ng-show="editTicket.errorMsg" >
+        <div class="alert alert-danger">{{ editTicket.errorMsg }}</div>
+    </div>
+
+
+    <div class="col-lg-12 pull-left" ng-cloak>
+        <md-content>
+          <md-tabs md-dynamic-height md-border-bottom>
+            <md-tab label="Internal Status Summary">
+              <md-content class="md-padding">         
+                <div class="panel panel-primary pull-left">
+                    <div class="panel-heading">
+                        <strong>Internal Status Summary</strong>
+                    </div>
+                    <table class="table">
+                        <tr>
+                            <th>Assigned To</th>
+                            <th>New</th>
+                            <th>Assigned</th>
+                            <th>Waiting For Feedback</th>
+                            <th>Waiting For Review</th>
+                            <th>Total Open</th>
+                            <th>Resolved</th>
+                            <th>Closed</th>
+                            <th>Total Closed</th>
+                        </tr>
+                        <tr class="text-center" ng-repeat="ticketData in editTicket.ticketData">
+                            <td>{{ticketData.id}} / {{ticketData.userName}}</td>
+                            <td>{{ticketData.newCount}}</td>
+                            <td>{{ticketData.assignedCount}}</td>
+                            <td>{{ticketData.confirmedCount}}</td>
+                            <td>{{ticketData.feedbackCount}}</td>
+                            <td>{{ticketData.feedbackCount + ticketData.newCount + ticketData.assignedCount + ticketData.confirmedCount}}</td>
+                            <td>{{ticketData.resolvedCount}}</td>
+                            <td>{{ticketData.closedCount}}</td>
+                            <td>{{ticketData.closedCount + ticketData.resolvedCount}}</td>
+                        </tr>
+                
+                    </table>
+                </div>
+    
+              </md-content>
+            </md-tab>
+            <md-tab label="Mantis Status Summary">
+              <md-content class="md-padding">
+                <div class="panel panel-primary pull-left">
+                        <div class="panel-heading">
+                            <strong>Mantis Status Summary</strong>
+                        </div>
+                        <table class="table">
+                            <tr>
+                                <th>Assigned To</th>
+                                <th>New</th>
+                                <th>Assigned</th>
+                                <th>Confirmed</th>
+                                <th>Feedback</th>
+                                <th>Total Open</th>
+                                <th>Resolved</th>
+                                <th>Closed</th>
+                                <th>Total Closed</th>
+                            </tr>
+                            <tr class="text-center" ng-repeat="ticketData in editTicket.ticketDataMantis">
+                                <td>{{ticketData.id}} / {{ticketData.userName}}</td>
+                                <td>{{ticketData.newCount}}</td>
+                                <td>{{ticketData.assignedCount}}</td>
+                                <td>{{ticketData.confirmedCount}}</td>
+                                <td>{{ticketData.feedbackCount}}</td>
+                                <td>{{ticketData.feedbackCount + ticketData.newCount + ticketData.assignedCount + ticketData.confirmedCount}}</td>
+                                <td>{{ticketData.resolvedCount}}</td>
+                                <td>{{ticketData.closedCount}}</td>
+                                <td>{{ticketData.closedCount + ticketData.resolvedCount}}</td>
+                            </tr>
+                    
+                        </table>
+                    </div>
+              </md-content>
+            </md-tab>
+            <md-tab label="Internal Category Summary">
+              <md-content class="md-padding">
+                <div class="panel panel-primary pull-left">
+                    <div class="panel-heading">
+                        <strong>Internal Category Summary</strong>
+                    </div>
+                    <table class="table">
+                        <tr>
+                            <th>Assigned To</th>
+                            <th>Issue</th>
+                            <th>Support Request</th>
+                            <th>Enhancement Request</th>
+                            <th>Total Tickets</th>
+                        </tr>
+                        <tr class="text-center" ng-repeat="ticketData in editTicket.internalCategoryticketData">
+                            <td>{{ticketData.id}} / {{ticketData.userName}}</td>
+                            <td>{{ticketData.issue}}</td>
+                            <td>{{ticketData.supportRequest}}</td>
+                            <td>{{ticketData.enhancementRequest}}</td>
+                            <td>{{ticketData.issue + ticketData.supportRequest + ticketData.enhancementRequest}}</td>
+                        </tr>
+                
+                    </table>
+                </div>
+              </md-content>
+            </md-tab>
+            <md-tab label="Mantis Category Summary">
+                <md-content class="md-padding">
+                  <div class="panel panel-primary pull-left">
+                    <div class="panel-heading">
+                        <strong>Mantis Category Summary</strong>
+                    </div>
+                        <table class="table">
+                        <tr>
+                            <th>Assigned To</th>
+                            <th>Issue</th>
+                            <th>Support Request</th>
+                            <th>Enhancement Request</th>
+                            <th>Total Tickets</th>
+                        </tr>
+                        <tr class="text-center" ng-repeat="ticketData in editTicket.mantisCategoryticketData">
+                            <td>{{ticketData.id}} / {{ticketData.userName}}</td>
+                            <td>{{ticketData.issue}}</td>
+                            <td>{{ticketData.supportRequest}}</td>
+                            <td>{{ticketData.enhancementRequest}}</td>
+                            <td>{{ticketData.issue + ticketData.supportRequest + ticketData.enhancementRequest}}</td>
+                        </tr>
+                
+                        </table>
+                    </div>
+                </md-content>
+              </md-tab>
+              <md-tab label="Module Wise Summary">
+                <md-content class="md-padding">
+                  <div class="panel panel-primary pull-left">
+                    <div class="panel-heading">
+                        <strong>Module Wise Summary</strong><h6>(Excluding Closed Tickets)</h6></strong>
+                    </div>
+                    <table class="table">
+                        <tr>
+                            <th>Module</th>
+                            <th>New</th>
+                            <th>Assigned</th>
+                            <th>Confirmed</th>
+                            <th>Feedback</th>
+                            <th>Total Open</th>
+                            <th>Resolved</th>
+                            <th>Closed</th>
+                            <th>Total Closed</th>
+                        </tr>
+                        <tr class="text-center" ng-repeat="ticketData in editTicket.modulewiseticketData">
+                            <td class="text-left">{{ticketData.id}}</td>
+                            <td>{{ticketData.newCount}}</td>
+                            <td>{{ticketData.assignedCount}}</td>
+                            <td>{{ticketData.confirmedCount}}</td>
+                            <td>{{ticketData.feedbackCount}}</td>
+                            <td>{{ticketData.feedbackCount + ticketData.newCount + ticketData.assignedCount + ticketData.confirmedCount}}</td>
+                            <td>{{ticketData.resolvedCount}}</td>
+                            <td>{{ticketData.closedCount}}</td>
+                            <td>{{ticketData.closedCount + ticketData.resolvedCount}}</td>
+                        </tr>
+                    </table>
+                </div>
+                </md-content>
+            </md-tab>
+          </md-tabs>
+        </md-content>
+      </div>

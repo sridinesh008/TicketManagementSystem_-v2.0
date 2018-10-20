@@ -1,0 +1,41 @@
+<div class="page-header">
+    <h1 style="width: 16.5%;">Edit User</h1> 
+</div>
+
+<br>
+<ul class="nav nav-tabs">
+    <li role="presentation" ng-click="edit.namePhase();" ng-class="nameTab"><a href="#">Name</a></li>
+    <li role="presentation" ng-click="edit.associateIDPhase();" ng-class="associateIDTab"><a href="#">Associate ID</a></li>
+    <li role="presentation" ng-click="edit.emailPhase();" ng-class="emailTab"><a href="#">E-Mail</a></li>
+    <li role="presentation" ng-click="edit.permissionPhase();" ng-class="permissionTab"><a href="#">Permission</a></li>
+    <!--<li role="presentation"><a href="#">Password</a></li>-->
+</ul>
+
+<!--Phase One: Name-->
+<form name="edit.nameForm" ng-show="edit.phase1" ng-submit="edit.updateName(newName,edit.nameForm.userName.$valid)" novalidate>
+    <div ng-class="{'has-success':(!edit.nameForm.userName.$pristine && edit.nameForm.userName.$valid),'has-error':(!edit.nameForm.userName.$pristine && !edit.nameForm.userName.$valid) || (!edit.nameForm.userName.$valid && edit.nameForm.$submitted)}">
+            <label >Name:</label>
+            <input ng-disabled="edit.disabled" type="text" class="form-control" name="userName" ng-minlength="3" ng-maxlength="20" placeholder="Please Enter Name" ng-pattern="/^([a-zA-Z]{3,30})+((\s[a-zA-Z]{3,30})+)$/" ng-model="newName" required></input>
+            <p class="error help-block" ng-show="(!edit.nameForm.userName.$pristine && edit.nameForm.userName.$error.required) || (edit.nameForm.$submitted && edit.nameForm.userName.$error.required)">Please enter the Name</p>
+            <ul ng-show="(!edit.nameForm.userName.$pristine && edit.nameForm.userName.$error.pattern) || (!edit.nameForm.userName.$pristine && edit.nameForm.userName.$error.minlength) || (!edit.nameForm.userName.$pristine && edit.nameForm.userName.$error.maxlength)" class="help-block">
+                <li>Must have a space in between first and last name</li>
+                <li>Must not contain any special characters</li>
+                <li>Must not contain any numbers</li>
+                <li>Must be at least 3 characters but no more than 20</li>
+            </ul>
+        </div>
+        </br>
+        <button ng-disabled="edit.disabled" type="submit" class="btn btn-primary" >Update</button>
+</form>
+<!--Phase One: Associate ID-->
+<!--Phase One: E-Mail-->
+<!--Phase One: Permission-->
+
+
+<div class="row show-hide-message" ng-show="edit.successMsg" >
+        <div class="alert alert-success">{{ edit.successMsg }}</div>
+    </div>
+    
+    <div class="row show-hide-message" ng-show="edit.errorMsg" >
+            <div class="alert alert-danger">{{ edit.errorMsg }}</div>
+</div>

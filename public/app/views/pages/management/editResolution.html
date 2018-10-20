@@ -1,0 +1,49 @@
+<div class="page-header">
+    <h1 style="width: 21.5%;">Edit Resolution</h1> 
+</div>
+
+<form name="editResolutionForm" ng-submit="editResolution.updateResolution(resolutionData,editResolutionForm.$valid);" novalidate>
+        <div class="col-lg-12 nextLine_padding">
+            <div class="col-lg-12 nextLine_padding">
+                <label>Sample Ticket IDs:</label>
+                <textarea type="text" class="form-control" name="sampleTicket"  ng-maxlength="500" placeholder="Please enter SampleTicket" ng-model="editResolution.resolutionData.sampleTicketIDs" required></textarea>
+            </div>
+            <div class="col-lg-12 nextLine_padding">
+                    <label>For What?</label>
+                    <textarea type="text" class="form-control" name="forWhat"  ng-maxlength="500" placeholder="Please enter detailed description of the ticket for which the resolution is added" ng-model="editResolution.resolutionData.forWhat" required></textarea>
+                    <p class="has-error-block" ng-show="(editResolutionForm.forWhat.$touched && editResolutionForm.forWhat.$error.required) || (editResolutionForm.$submitted && editResolutionForm.forWhat.$error.required)">This field is required.</p>
+                </div>
+            <div class="col-lg-12 nextLine_padding">
+                <label>Pre-Requisite:</label>
+                <textarea type="text" ng-trim="false"  class="form-control" name="prerequisite"  ng-maxlength="500" placeholder="Please enter pre-requisite steps if any in detail" ng-model="editResolution.resolutionData.preRequisite" required></textarea>
+                <p class="has-error-block" ng-show="(editResolutionForm.prerequisite.$touched && editResolutionForm.prerequisite.$error.required) || (editResolutionForm.$submitted && editResolutionForm.prerequisite.$error.required)">This field is required.</p>
+            </div>
+            <div class="col-lg-12 nextLine_padding">
+                <label>How to Resolve? or Resolution Text:</label>
+                <textarea type="text" ng-trim="false" class="form-control" name="resolution"  ng-maxlength="500" placeholder="Please enter resolution steps in detail" ng-model="editResolution.resolutionData.resolution" required></textarea>
+                <p class="has-error-block" ng-show="(editResolutionForm.resolution.$touched && editResolutionForm.resolution.$error.required) || (editResolutionForm.$submitted && editResolutionForm.resolution.$error.required)">This field is required.</p>
+            </div>
+            <div class="col-lg-12 nextLine_padding">
+                <label>How to Verify?</label>
+                <textarea type="text" ng-trim="false" class="form-control" name="verifySteps"  ng-maxlength="500" placeholder="Please enter verificatioon Steps in detail" ng-model="editResolution.resolutionData.verifySteps" required></textarea>
+                <p class="has-error-block" ng-show="(editResolutionForm.verifySteps.$touched && editResolutionForm.verifySteps.$error.required) || (editResolutionForm.$submitted && editResolutionForm.verifySteps.$error.required)">This field is required.</p>
+            </div>
+            <div class="col-lg-12 nextLine_padding" style="margin-top:15px">
+                <button type="submit" style="float: left;" class="btn btn-success clear" >Update</button>
+            </div>
+        </div>
+</form>
+
+</br> 
+<div class="jumbotron text-center" ng-show="editResolution.loading">
+    <span class="glyphicon glyphicon-repeat spinner"></span>
+    <Loading...></p>
+</div>
+<div class="col-xs-12 nomarginpadding pull-left row show-hide-message"  ng-show="editResolution.successMsg" >
+        <div class="alert alert-success">{{ editResolution.successMsg }}</div>
+    </div>
+    
+    <div class="col-xs-12 nomarginpadding pull-left row show-hide-message"  ng-show="editResolution.errorMsg" >
+            <div class="alert alert-danger">{{editResolution.field}}+"-"+{{ editResolution.errorMsg }}</div>
+    </div>
+</br>

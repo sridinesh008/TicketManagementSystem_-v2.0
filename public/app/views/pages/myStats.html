@@ -1,0 +1,84 @@
+<div class="page-header">
+    <h1 style="width: 12.5%;">My Stats</h1> 
+</div>
+<div class="col-xs-12 nomarginpadding" ng-cloak>
+<div class="col-lg-6 chart-style" >
+	<label><h3>Internal Status</h3></label>
+	<button ng-click="myStats.myStatsByInternalStatusForChart('pie');" class="chart-btn">P</button>
+	<button ng-click="myStats.myStatsByInternalStatusForChart('bar');" class="chart-btn">B</button>
+	<button ng-click="myStats.myStatsByInternalStatusForChart('line');" class="chart-btn">L</button>
+	<button ng-click="myStats.myStatsByInternalStatusForChart('radar');" class="chart-btn">R</button>
+	<canvas id="internalStatus" ></canvas>
+</div>
+<div class="col-lg-6 chart-style" >
+	<label><h3>Mantis Status</h3></label>
+	<button ng-click="myStats.myStatsByMantisStatusForChart('doughnut');" class="chart-btn">P</button>
+	<button ng-click="myStats.myStatsByMantisStatusForChart('bar');" class="chart-btn">B</button>
+	<button ng-click="myStats.myStatsByMantisStatusForChart('line');" class="chart-btn">L</button>
+	<button ng-click="myStats.myStatsByMantisStatusForChart('radar');" class="chart-btn">R</button>
+	<canvas id="mantisStatus" ></canvas>
+</div>
+<div class="col-lg-6 chart-style" >
+	<label><h3>Module Wise</h3><h6>(Overall)</h6></label>
+	<button ng-click="myStats.myStatsByModuleForChart('pie');" class="chart-btn">P</button>
+	<button ng-click="myStats.myStatsByModuleForChart('horizontalBar');" class="chart-btn">B</button>
+	<button ng-click="myStats.myStatsByModuleForChart('line');" class="chart-btn">L</button>
+	<button ng-click="myStats.myStatsByModuleForChart('radar');" class="chart-btn">R</button>
+	<canvas id="module" ></canvas>
+</div>
+<div class="col-lg-6 chart-style" >
+	<label><h3>Module Wise</h3><h6>(Excluding Closed Tickets)</h6></label>
+	<button ng-click="myStats.myStatsByModuleForChartOnlyOpen('pie');" class="chart-btn">P</button>
+	<button ng-click="myStats.myStatsByModuleForChartOnlyOpen('horizontalBar');" class="chart-btn">B</button>
+	<button ng-click="myStats.myStatsByModuleForChartOnlyOpen('line');" class="chart-btn">L</button>
+	<button ng-click="myStats.myStatsByModuleForChartOnlyOpen('radar');" class="chart-btn">R</button>
+	<canvas id="moduleOnlyOpen" ></canvas>
+</div>
+<div class="col-lg-6 chart-style" >
+	<label><h3>Internal Category</h3><h6>(Overall)</h6></label>
+	<button ng-click="myStats.myStatsByInternalCategoryForChart('pie');" class="chart-btn">P</button>
+	<button ng-click="myStats.myStatsByInternalCategoryForChart('horizontalBar');" class="chart-btn">B</button>
+	<button ng-click="myStats.myStatsByInternalCategoryForChart('line');" class="chart-btn">L</button>
+	<button ng-click="myStats.myStatsByInternalCategoryForChart('radar');" class="chart-btn">R</button>
+	<canvas id="internalCategory" ></canvas>
+</div>
+<div class="col-lg-6 chart-style" >
+	<label><h3>Internal Category</h3><h6>(Excluding Closed Tickets)</h6></label>
+	<button ng-click="myStats.myStatsByInternalCategoryForChartOnlyOpen('pie');" class="chart-btn">P</button>
+	<button ng-click="myStats.myStatsByInternalCategoryForChartOnlyOpen('horizontalBar');" class="chart-btn">B</button>
+	<button ng-click="myStats.myStatsByInternalCategoryForChartOnlyOpen('line');" class="chart-btn">L</button>
+	<button ng-click="myStats.myStatsByInternalCategoryForChartOnlyOpen('radar');" class="chart-btn">R</button>
+	<canvas id="internalCategoryOnlyOpen" ></canvas>
+</div>
+<div class="col-lg-6 chart-style" >
+	<label><h3>Mantis Category</h3><h6>(Overall)</h6></label>
+	<button ng-click="myStats.myStatsByMantisCategoryForChart('pie');" class="chart-btn">P</button>
+	<button ng-click="myStats.myStatsByMantisCategoryForChart('horizontalBar');" class="chart-btn">B</button>
+	<button ng-click="myStats.myStatsByMantisCategoryForChart('line');" class="chart-btn">L</button>
+	<button ng-click="myStats.myStatsByMantisCategoryForChart('radar');" class="chart-btn">R</button>
+	<canvas id="mantisCategory" ></canvas>
+</div>
+<div class="col-lg-6 chart-style" >
+	<label><h3>Mantis Category</h3><h6>(Excluding Closed Tickets)</h6></label>
+	<button ng-click="myStats.myStatsByMantisCategoryForChartOnlyOpen('pie');" class="chart-btn">P</button>
+	<button ng-click="myStats.myStatsByMantisCategoryForChartOnlyOpen('horizontalBar');" class="chart-btn">B</button>
+	<button ng-click="myStats.myStatsByMantisCategoryForChartOnlyOpen('line');" class="chart-btn">L</button>
+	<button ng-click="myStats.myStatsByMantisCategoryForChartOnlyOpen('radar');" class="chart-btn">R</button>
+	<canvas id="mantisCategoryOnlyOpen" ></canvas>
+</div>
+</div>
+<div class="modal fade" id="myModal2" role="dialog">
+	<div class="modal-dialog">
+	  <!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">Loading...</h4>
+			</div>
+			<div class="modal-body">
+				<div class="dizzy-gillespie"></div>
+			</div>
+			<div class="modal-footer">
+			</div>
+		</div>
+	</div>
+</div>

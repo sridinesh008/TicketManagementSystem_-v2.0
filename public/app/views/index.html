@@ -1,0 +1,153 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <base href="/">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="author" content="Shiva , Dinesh">
+
+    <!--cascade styling sheets-->
+    <link rel="stylesheet" href="assets/css/Bootstrap.css">
+    <link rel="stylesheet" href="assets/css/animate.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    
+    <link rel="stylesheet" href="assets/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/angular-material.min.css">
+    <link rel="stylesheet" href="assets/css/buttons.datatables.min.css"/>
+
+    
+
+    <!--Angular Main Source Files-->
+    <script src="assets/js/jquery-3.2.1.js"></script>
+    <script src="assets/js/jquery.dataTables.min.js"></script>
+    <script src="assets/js/angular.js"></script>
+    <script src="assets/js/angular-route.js"></script>
+    <script src="assets/js/angular-animate.js"></script>
+    <script src="assets/js/angular-aria.min.js"></script>
+	<script src="assets/js/angular-message-format.js"></script>
+    <script src="assets/js/angular-messages.min.js"></script>
+    <script src="assets/js/angular-material.min.js"></script>
+    <script src="assets/js/ui-bootstrap-tpls.min.js"></script>
+    <script src="assets/js/angular-datatables.min.js"></script>
+    <script src="assets/js/dataTables.bootstrap.min.js"></script>
+    <script src="assets/js/chart.js"></script>
+    
+    
+    <script src="assets/js/jszip.min.js"></script>
+    <script src="assets/js/pdfmake.min.js"></script>
+    
+    <script src="assets/js/dataTables.buttons.min.js"></script>
+    <script src="assets/js/buttons.colVis.min.js"></script>
+    <script src="assets/js/buttons.flash.min.js"></script>
+    <script src="assets/js/buttons.html5.min.js"></script>
+    <script src="assets/js/buttons.print.min.js"></script>
+    <script src="assets/js/angular-datatables.buttons.min.js"></script>
+    
+    
+    <!--Angular Config/Routing Files-->
+    <script src="app/app.js"></script>
+    <script src="app/routes.js"></script>
+
+    <!--Angular Controller Files-->
+    <script src="app/controllers/userCTRL.js"></script>
+    <script src="app/controllers/mainCtrl.js"></script>
+    <script src="app/controllers/managementCtrl.js"></script>
+    <script src="app/controllers/issueCtrl.js"></script>
+    <script src="app/controllers/allTicketsCtrl.js"></script>
+    <script src="app/controllers/dashBoardCtrl.js"></script>
+    <script src="app/controllers/resolutionRepo.js"></script>
+    <script src="app/controllers/editResolutionRepo.js"></script>
+    <script src="app/controllers/myTicketCtrl.js"></script>
+    <script src="app/controllers/myStatsCtrl.js"></script>
+
+    <!--Angular Services Files-->
+    <script src="app/services/userServices.js"></script>
+    <script src="app/services/authServices.js"></script>
+    <script src="app/services/issueServices.js"></script>
+    <script src="app/services/commentService.js"></script>
+	  <script src="app/services/resolutionService.js"></script>
+    <script src="app/services/myTicketService.js"></script>
+    <link rel="shortcut icon" type="image/ico" href="assets/icon1.png"/>
+    <title>Ticket Management App</title>
+
+  </head>
+
+  <body ng-app="ticketManagement" ng-controller="mainCtrl as main" ng-show="main.loadme" ng-cloak>
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Ticket Management App</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse navbar-right">
+          <ul class="nav navbar-nav">
+            <li><a ng-show="main.isLoggedIn" href="/myStats">My Stats</a></li>
+            <li><a ng-show="main.isLoggedIn" href="/dashboard">Project Stats</a></li>
+            <li><a ng-show="main.isLoggedIn" href="/resolutionRepo">Resolution Repo</a></li>
+            <li><a ng-show="main.isLoggedIn && main.authorized" href="/management">User Management</a></li>
+            <li><a ng-show="main.isLoggedIn && main.authorized" href="/createTicket">Add a ticket</a></li>
+            <li><a ng-show="main.isLoggedIn" href="/allTickets">All Tickets</a></li>
+            <li><a ng-show="main.isLoggedIn" href="/myTickets">My Tickets</a></li>
+            <li><a ng-show="!main.isLoggedIn" href="/login">Login</a></li>
+            <li><a ng-show="!main.isLoggedIn" href="/register">Register</a></li>
+            <li class="dropdown navbar-right " ng-show="main.isLoggedIn">
+              <a href="#" class="dropdown-toggle listParent" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Hello {{main.username}} <span class="caret"></span></a>
+              <ul class="dropdown-menu ">
+                <li><a class="listItem" href="/profile">Profile</a></li>
+                <li><a  class="listItem" href="#" ng-click="main.logout();">Logout</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container theme-showcase" role="main">
+
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+
+    <div ng-view></div>
+
+      <!-- Modal -->
+      <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+        
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">{{main.modalHeader}}</h4>
+            </div>
+            <div class="modal-body">
+              <p ng-show="!main.hideButtons">{{main.modalBody}}</p>
+              <div ng-show="main.hideButtons" class="dizzy-gillespie"></div>
+            </div>
+            <div ng-hide="main.hideButtons" class="modal-footer">
+              <button type="button" ng-click="main.reNewsession();"  class="btn btn-primary" data-dismiss="modal">Yes</button>
+              <button type="button" ng-click="main.endSession();" class="btn btn-danger" data-dismiss="modal">No</button>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      
+    </div> <!-- /container -->
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    
+    <script src="assets/js/Bootstrap.js"></script>
+    <script src="assets/js/common_script.js"></script> 
+
+  </body>
+</html>
