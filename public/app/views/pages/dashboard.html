@@ -11,7 +11,7 @@
 	<canvas id="internalStatus" ></canvas>
 </div>
 <div class="col-lg-6 chart-style" >
-	<label><h3>Mantis Status</h3></label>
+	<label><h3>External Status</h3></label>
 	<button ng-click="dashBoard.getTicketSummaryByMantisStatusForChart('doughnut');" class="chart-btn">P</button>
 	<button ng-click="dashBoard.getTicketSummaryByMantisStatusForChart('bar');" class="chart-btn">B</button>
 	<button ng-click="dashBoard.getTicketSummaryByMantisStatusForChart('line');" class="chart-btn">L</button>
@@ -67,7 +67,7 @@
 	<canvas id="internalCategoryOnlyOpen" ></canvas>
 </div>
 <div class="col-lg-6 chart-style" >
-	<label><h3>Mantis Category</h3><h6>(Overall)</h6></label>
+	<label><h3>External Category</h3><h6>(Overall)</h6></label>
 	<button ng-click="dashBoard.getTicketSummaryByMantisCategoryForChart('pie');" class="chart-btn">P</button>
 	<button ng-click="dashBoard.getTicketSummaryByMantisCategoryForChart('horizontalBar');" class="chart-btn">B</button>
 	<button ng-click="dashBoard.getTicketSummaryByMantisCategoryForChart('line');" class="chart-btn">L</button>
@@ -75,7 +75,7 @@
 	<canvas id="mantisCategory" ></canvas>
 </div>
 <div class="col-lg-6 chart-style" >
-	<label><h3>Mantis Category</h3><h6>(Excluding Closed Tickets)</h6></label>
+	<label><h3>External Category</h3><h6>(Excluding Closed Tickets)</h6></label>
 	<button ng-click="dashBoard.getTicketSummaryByMantisCategoryForChartOnlyOpen('pie');" class="chart-btn">P</button>
 	<button ng-click="dashBoard.getTicketSummaryByMantisCategoryForChartOnlyOpen('horizontalBar');" class="chart-btn">B</button>
 	<button ng-click="dashBoard.getTicketSummaryByMantisCategoryForChartOnlyOpen('line');" class="chart-btn">L</button>

@@ -277,14 +277,7 @@ app.controller('issueCtrl', function ($http,$location,$timeout,Issue,$scope,User
         appData.errorMsg= false;
         appData.successMsg= false;
         appData.newModuleMsg= false;
-        console.log(arr);
-        if(typeof(appData.issueData.assingedTo)=="string"&& (arr.indexOf(appData.issueData.assingedTo)==-1) ){
-            console.log(ID );
-        }else{
-
-        }
         if(valid){
-            console.log(appData.issueData);
             if(!appData.issueData.module){
                 appData.issueData.module = appData.searchTextModule;
                 appData.newModuleMsg= true;
@@ -295,7 +288,6 @@ app.controller('issueCtrl', function ($http,$location,$timeout,Issue,$scope,User
                     appData.commentData.assign = appData.issueData.assingedTo;
                     appData.commentData.commentText = "Ticket with ID "+appData.commentData.mantisIssueID+" has been assigned to "+appData.commentData.assign.associateID;
                     Comment.create(appData.commentData).then(function(data){  
-                        console.log(data);
                     });
                     appData.loading=false;
                     appData.getTicketSummaryByInternalStatus();

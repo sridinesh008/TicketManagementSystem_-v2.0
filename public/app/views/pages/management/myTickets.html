@@ -13,26 +13,24 @@
     <div class="row">
         <div class="col-sm-12">
     <table class="table table-striped table-bordered" datatable="ng" dt-options="vm.dtOptions"  id="myTicketsTable" dt-instance="vm.dtInstance"  width="100%" dt-column-defs="vm.dtColumnDefs">
-
             <thead>
             <tr>
-                <th colspan="1">Mantis IssueID</th>
-                <th class="text-center" colspan="3">Mantis</th>
+                <th class="text-center" colspan="4">External</th>
                 <th class="text-center" colspan="3">Internal</th>
-                <th colspan="4"></th>
+                <th class="text-center" colspan="4">General</th>
             </tr>
             <tr>
                 <!--<th></th>-->
-                <th>Mantis IssueID</th>
+                <th>Ticket ID</th>
                 <th>Status</th>
                 <th>Category</th>
-                <th >Priority</th>
-                <th >Status</th>
-                <th >Category</th>
-                <th >Priority</th>
+                <th>Priority</th>
+                <th>Status</th>
+                <th>Category</th>
+                <th>Priority</th>
                 <th>Created Date</th>
                 <th>Module</th>
-                <th>Name / Assingned To</th>
+                <th>Assigned To</th>
                 <th>Action</th>
             </tr>
             </thead>
@@ -51,7 +49,7 @@
                             <td>
                                     <div class="btn-group">
                                             <a href="/editTickets/{{ticket._id}}"><button type="button" class="btn btn-default btn" ng-click="edit($index);"><i class="glyphicon glyphicon-pencil"></i></button></a>
-                                            <button  type="button" ng-click="showCommentDisplay(ticket.mantisIssueID)" class="btn btn-default pull-left btn"><md-tooltip md-direction="bottom">Comment Histrory</md-tooltip><i class="glyphicon glyphicon-comment"></i></button>  
+                                            <button  type="button" ng-click="showCommentDisplay(ticket.mantisIssueID)" class="btn btn-default pull-left btn"><md-tooltip md-direction="bottom">Comments</md-tooltip><i class="glyphicon glyphicon-comment"></i></button>  
                                     </div>
                             </td>
             </tr>

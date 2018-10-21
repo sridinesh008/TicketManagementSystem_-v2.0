@@ -70,7 +70,6 @@ module.exports = function(router) {
                 }else{
 					var token = jwt.sign({ associateID:user.associateID, userName: user.userName, email:user.email },secret,{ expiresIn: '24h' });
 					res.json({success:true,message:"User Authentication is successful",token: token});
-					console.log(user+"this");
                 }
             }
         }
@@ -84,7 +83,6 @@ module.exports = function(router) {
 		if(token){
 			// verify a token symmetric
 			jwt.verify(token, secret, function(err, decoded) {
-				console.log(decoded);
 				if(err) {
 					res.json({success:false,message:'Invalid token. Do login again!'});
 				}else{
@@ -108,7 +106,6 @@ module.exports = function(router) {
             if(err){
                 res.json({success:false,message:err})
             }else{
-                console.log(user);
                 var newToken = jwt.sign({ associateID:user.associateID,  userName: user.userName, email:user.email },secret,{ expiresIn: '24h' });
                 res.json({success:true,message:"User Authentication is successful",token: newToken});
             }
@@ -129,7 +126,6 @@ module.exports = function(router) {
 
     router.get('/management',function (req,res) {
         User.find({}).select("userName associateID email").exec(function (err,users) {
-            console.log(users+"required");
             if(err){
                 res.json({success:false,message:err})
             }
@@ -197,7 +193,6 @@ module.exports = function(router) {
     var newPermission = "";
     var newAssociateID = ""
     router.put('/edit',function (req,res) {
-        console.log(req.body);
         var userToBeEdited =  req.body._id;
         if (req.body.userName){
             newName = req.body.userName;
@@ -217,12 +212,8 @@ module.exports = function(router) {
                     }else{
                        if(mainUser.permission != "admin" && mainUser.permission != "moderator"){
                             res.json({success:false,message:"Insufficient Permission"});
-                       }else{
-                           console.log("permission granted");
-                           
+                       }else{                           
                            if(newName){
-                            console.log("newName is true");
-
                             User.update({ _id: userToBeEdited }, { $set: { userName: newName}}, function (err) {
                                 if(err){
                                     console.log(err);

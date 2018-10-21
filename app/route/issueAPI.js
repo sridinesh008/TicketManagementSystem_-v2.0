@@ -44,24 +44,30 @@ module.exports = function(router) {
                     issue.internalCategory = req.body.internalCategory;
                     issue.internalPriority = req.body.internalPriority;
                     issue.module = req.body.module;
-                    issue.assingedTo = req.body.assingedTo.associateID;
+                    var assingedTOflag = false;
+                    if(typeof req.body.assingedTo==="string"){
+                        issue.assingedTo  = req.body.assingedTo;
+                        assingedTOflag =  true;   
+                    }else{
+                        if(req.body.assingedTo!=null){
+                            issue.assingedTo  = req.body.assingedTo.associateID;
+                        }else{
+                            assingedTOflag = false;
+                        }
+                    }
                     issue.createdDate = moment(new Date()).format('DD-MM-YYYY hh:mm:ss');
                     issue.updatedDate = moment(new Date()).format('DD-MM-YYYY hh:mm:ss');
                     issue.mantisTicketSummary = req.body.mantisTicketSummary;
-
+                    if(assingedTOflag){
                     if(issue.mantisIssueID==null || issue.mantisIssueID==""|| issue.mantisStatus==null || issue.mantisStatus=="" || issue.mantisCategory ==null || issue.mantisCategory =="" ||issue.mantisPriority ==null || issue.mantisPriority==""){
                             if(issue.internalStatus==null || issue.internalStatus==""|| issue.internalCategory==null || issue.internalCategory =="" || issue.internalPriority ==null || issue.internalPriority =="" || issue.module ==null || issue.module =="" ||issue.assingedTo == "" ||issue.assingedTo == null||issue.ticketSummary == "" ||issue.ticketSummary == null){
-                                res.json({success:false,message:"Please Ensure all fields are filled with valid Data"});
-                                console.log("Please Ensure all fields are filled with valid Data");
-                                
+                                res.json({success:false,message:"Please Ensure all fields are filled with valid Data"});                                
                             }
                     }else{
                     issue.save(function (err) {
-
                         if(err){
                             if(err.errors!=null){
-                                console.log(err);
-                                
+                                console.log(err);   
                             if(err.errors.mantisIssueID){
                                 res.json({success:false,message:err.errors.mantisIssueID.message,field:"mantisIssueID"});
                             }else if(err.errors.mantisStatus){
@@ -96,6 +102,9 @@ module.exports = function(router) {
                                 res.json({success:true,message:"Ticket has been added successfully"});
                         }
                         }); 
+                    }
+                }else{
+                    res.json({success:false,message:"Assign to is Invalid.Please select a value from suggested list."});
                     }
                }
             }
@@ -148,9 +157,7 @@ module.exports = function(router) {
     });
 
     router.get('/getAllComments/:id',function (req,res) {
-        var userToBeEdited =  req.params.id;
-        console.log(userToBeEdited);
-        
+        var userToBeEdited =  req.params.id;        
                 User.findOne({ associateID : req.decoded.associateID }).select('permission').exec(function (err,mainUser) {
                     if(err){
                         res.json({success:false,message:err});
@@ -182,7 +189,6 @@ module.exports = function(router) {
         newModule = req.body.module;
         newUpdatedDate = moment(new Date()).format('DD-MM-YYYY hh:mm:ss');
         newMantisTicketSummary = req.body.mantisTicketSummary;
-        console.log(req.body.mantisTicketSummary+"Summary");
         if(typeof req.body.assingedTo==="string"){
             newAssingedTo = req.body.assingedTo;    
         }else{
@@ -205,13 +211,10 @@ module.exports = function(router) {
 
 
     router.put('/deleteTicket',function (req,res) {
-        console.log(req.body+"reqdeleteTicket");
         //console.log(res+"res");
         var userToBeEdited =  req.body.id;
         var activeStatus = req.body.active;
         var newUpdatedDate = moment(new Date()).format('DD-MM-YYYY hh:mm:ss');
-        console.log(userToBeEdited+"user");
-        console.log(activeStatus+"user");
                 User.findOne({ associateID : req.decoded.associateID }).select('permission').exec(function (err,mainUser) {
                     if(err){
                         res.json({success:false,message:err});
@@ -219,8 +222,6 @@ module.exports = function(router) {
                        if(mainUser.permission != "admin" && mainUser.permission != "moderator"){
                             res.json({success:false,message:"Insufficient Permission"});
                        }else{
-                           console.log("permission granted");
-
                             Issue.update({ mantisIssueID: userToBeEdited }, { $set: { active: activeStatus,updatedDate:newUpdatedDate}}, function (err) {
                                 if(err){
                                     console.log(err);
@@ -714,22 +715,12 @@ router.post('/filterSearch',function (req,res) {
     var selectedInternalPriorityChip = req.body.selectedInternalPriorityChip;
     var moduleChip = req.body.moduleChip;
     var assignToChip = req.body.assignToChip;
-    //console.log(selectedMantisStatusChip);
-    //console.log(selectedInternalStatusChip);
-    //console.log(selectedExternalCategoryChip);
-    //console.log(selectedInternalCategoryChip);
-    //console.log(selectedExternalPriorityChip);
-    //console.log(selectedInternalPriorityChip);
-    //console.log(moduleChip);
-    //console.log(assignToChip);
-    
     Issue.find(
         {$and : [{"active":"1"},{ internalStatus: { $in: selectedInternalStatusChip  } },{ mantisStatus :  { $in: selectedMantisStatusChip }  },{ mantisCategory :  { $in: selectedExternalCategoryChip }  },{ internalCategory :  { $in: selectedInternalCategoryChip }  },{ mantisPriority :  { $in: selectedExternalPriorityChip }  },{ internalPriority :  { $in: selectedInternalPriorityChip }  },{ module :  { $in: moduleChip }  },{ assingedTo :  { $in: assignToChip }  } ] }).select().exec(function (err,searchResult) {
             if(err){
             res.json({success:false,message:err});
             console.log(err);
             }else{ 
-                console.log(searchResult+"result");      
                  res.json({success:true,searchResult:searchResult});
             }
     });

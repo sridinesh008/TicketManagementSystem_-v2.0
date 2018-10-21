@@ -11,21 +11,21 @@
             <p class="has-error-block" ng-show="(issueForm.mantisIssueID.$touched && issueForm.mantisIssueID.$error.required) || (issueForm.$submitted && issueForm.mantisIssueID.$error.required)">This field is required.</p>
         </div>
         <div class="col-lg-3">
-            <label>Mantis Status:</label>
+            <label>External Status:</label>
             <select  class="form-control" name="mantisStatus" ng-options="Status for Status in editTicket.mantisStatus" ng-model="newMantisStatus" required>
                     <option value="">Select an option</option>
             </select>
             <p class="has-error-block" ng-show="(issueForm.mantisStatus.$touched && issueForm.mantisStatus.$error.required) || (issueForm.$submitted && issueForm.mantisStatus.$error.required)">This field is required.</p>
         </div>
         <div class="col-lg-3">
-        <label>Mantis Category:</label>
+        <label>External Category:</label>
         <select  class="form-control" name="mantisCategory" ng-options="Category for Category in editTicket.Categories" ng-model="newMantisCategory" required>
             <option value="">Select an option</option>
         </select>
         <p class="has-error-block" ng-show="(issueForm.mantisCategory.$touched && issueForm.mantisCategory.$error.required) || (issueForm.$submitted && issueForm.mantisCategory.$error.required)">This field is required.</p>
         </div>
         <div class="col-lg-3">
-            <label>Mantis Priority:</label>
+            <label>External Priority:</label>
             <select  class="form-control" name="mantisPriority" ng-options="Priority for Priority in editTicket.priorities" ng-model="newMantisPriority" required>
                     <option value="">Select an option</option>
             </select>
@@ -174,7 +174,7 @@
               <md-content class="md-padding">
                 <div class="panel panel-primary pull-left">
                         <div class="panel-heading">
-                            <strong>Mantis Status Summary</strong>
+                            <strong>External Status Summary</strong>
                         </div>
                         <table class="table">
                             <tr>
@@ -234,7 +234,7 @@
                 <md-content class="md-padding">
                   <div class="panel panel-primary pull-left">
                     <div class="panel-heading">
-                        <strong>Mantis Category Summary</strong>
+                        <strong>External Category Summary</strong>
                     </div>
                         <table class="table">
                         <tr>

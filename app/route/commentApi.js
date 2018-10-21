@@ -38,7 +38,6 @@ module.exports = function(router) {
                     
                     if(comment.mantisIssueID==null || comment.mantisIssueID==""|| comment.createdBy ==null || comment.createdBy =="" ||comment.commentText ==null || comment.commentText==""){
                                 res.json({success:false,message:"Please Ensure all fields are filled with valid Data"});
-                                console.log("Please Ensure all fields are filled with valid Data");
                     }else{
                     comment.save(function (err) {
                         console.log(err);
